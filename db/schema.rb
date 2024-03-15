@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_15_131500) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_15_131909) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "role_type", ["admin", "project_manager", "team_member"]
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "content"
+    t.datetime "sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
 
   create_table "projects", force: :cascade do |t|
     t.string "name", null: false
@@ -58,6 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_131500) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "messages", "users"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "users"
 end
