@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
   # Associations
   belongs_to :user
+  has_many :events
 
   # Valid statuses for projects
   enum status: { active: 'active', completed: 'completed', on_hold: 'on_hold' }
