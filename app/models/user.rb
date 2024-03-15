@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :projects
+
   enum role: {
     admin: 'admin',
     project_manager: 'project_manager',
