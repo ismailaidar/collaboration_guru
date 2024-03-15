@@ -107,6 +107,38 @@ ALTER SEQUENCE public.messages_id_seq OWNED BY public.messages.id;
 
 
 --
+-- Name: project_assignments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.project_assignments (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    project_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: project_assignments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.project_assignments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: project_assignments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.project_assignments_id_seq OWNED BY public.project_assignments.id;
+
+
+--
 -- Name: projects; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -161,7 +193,7 @@ CREATE TABLE public.tasks (
     title character varying NOT NULL,
     description character varying,
     due_date date,
-    status character varying,
+    status character varying DEFAULT 'active'::character varying NOT NULL,
     priority integer,
     project_id bigint NOT NULL,
     user_id bigint NOT NULL,
@@ -240,6 +272,13 @@ ALTER TABLE ONLY public.messages ALTER COLUMN id SET DEFAULT nextval('public.mes
 
 
 --
+-- Name: project_assignments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.project_assignments ALTER COLUMN id SET DEFAULT nextval('public.project_assignments_id_seq'::regclass);
+
+
+--
 -- Name: projects id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -282,6 +321,14 @@ ALTER TABLE ONLY public.events
 
 ALTER TABLE ONLY public.messages
     ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: project_assignments project_assignments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.project_assignments
+    ADD CONSTRAINT project_assignments_pkey PRIMARY KEY (id);
 
 
 --
@@ -335,6 +382,20 @@ CREATE INDEX index_events_on_user_id ON public.events USING btree (user_id);
 --
 
 CREATE INDEX index_messages_on_user_id ON public.messages USING btree (user_id);
+
+
+--
+-- Name: index_project_assignments_on_project_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_project_assignments_on_project_id ON public.project_assignments USING btree (project_id);
+
+
+--
+-- Name: index_project_assignments_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_project_assignments_on_user_id ON public.project_assignments USING btree (user_id);
 
 
 --
@@ -413,12 +474,29 @@ ALTER TABLE ONLY public.tasks
 
 
 --
+-- Name: project_assignments fk_rails_b8185b0c0e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.project_assignments
+    ADD CONSTRAINT fk_rails_b8185b0c0e FOREIGN KEY (project_id) REFERENCES public.projects(id);
+
+
+--
+-- Name: project_assignments fk_rails_f555abab6e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.project_assignments
+    ADD CONSTRAINT fk_rails_f555abab6e FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240315135653'),
 ('20240315132053'),
 ('20240315131909'),
 ('20240315131500'),

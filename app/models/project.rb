@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
   # Associations
-  belongs_to :user
+  has_many :project_assignments
+  has_many :users, through: :project_assignments
   has_many :events
 
   # Valid statuses for projects
