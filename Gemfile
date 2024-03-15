@@ -63,5 +63,6 @@ group :development do
   # gem "spring"
 end
 
+gem 'chronic'
 gem 'devise', '~> 4.9'
 gem 'pundit'
