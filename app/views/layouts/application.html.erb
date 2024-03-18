@@ -14,8 +14,10 @@
   <body>
     <%= render 'partials/navbar' %>
     <%= render 'partials/notification' %>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="container mx-auto mt-28 px-5 py-12">
       <%= yield %>
     </main>
+
+    <%= render 'partials/footer' %>
   </body>
 </html>
