@@ -1,14 +1,17 @@
 document.addEventListener("turbo:load", function () {
-  document.getElementById('user-menu-button').addEventListener('click', function () {
-    var dropdownMenu = document.querySelector('[aria-labelledby="user-menu-button"]');
-    if (dropdownMenu.classList.contains('hidden')) {
-      dropdownMenu.classList.remove('hidden');
-      dropdownMenu.classList.add('block');
-    } else {
-      dropdownMenu.classList.add('hidden');
-      dropdownMenu.classList.remove('block');
-    }
-  });
+  const btn = document.getElementById('user-menu-button');
+  if(btn) {
+    btn.addEventListener('click', function () {
+      var dropdownMenu = document.querySelector('[aria-labelledby="user-menu-button"]');
+      if (dropdownMenu.classList.contains('hidden')) {
+        dropdownMenu.classList.remove('hidden');
+        dropdownMenu.classList.add('block');
+      } else {
+        dropdownMenu.classList.add('hidden');
+        dropdownMenu.classList.remove('block');
+      }
+    });
+  }
 })
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -17,12 +20,14 @@ document.addEventListener('DOMContentLoaded', function () {
   const menu = document.getElementById('mobile-menu');
 
   // Add a click event listener to the button
-  toggleButton.addEventListener('click', function () {
-    // Toggle the 'hidden' class on the menu
-    menu.classList.toggle('hidden');
-
-    // Update aria-expanded attribute based on visibility
-    const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
-    toggleButton.setAttribute('aria-expanded', !isExpanded);
-  });
+  if(toggleButton) {
+    toggleButton.addEventListener('click', function () {
+      // Toggle the 'hidden' class on the menu
+      menu.classList.toggle('hidden');
+  
+      // Update aria-expanded attribute based on visibility
+      const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
+      toggleButton.setAttribute('aria-expanded', !isExpanded);
+    });
+  }
 });
