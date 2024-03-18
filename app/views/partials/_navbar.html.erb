@@ -25,6 +25,9 @@
             <% if !user_signed_in? %>
               <%= link_to 'Sign In', new_user_session_path, class: 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium' %>
             <% end %>
+            <% if user_signed_in? %>
+              <%= link_to 'Projects', projects_path, class: 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium' %>
+            <% end %>
           </div>
         </div>
       </div>
