@@ -13,7 +13,9 @@
 
   <body>
     <%= render 'partials/navbar' %>
-    <%= render 'partials/notification' %>
+    <div id="flash_messages">
+      <%= render 'partials/notification' %>
+    </div>
     <main class="container mx-auto mt-28 px-5 py-12">
       <%= yield %>
     </main>

@@ -47,9 +47,17 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
-    @project.destroy!
+    return unless @project.destroy
 
     respond_to do |format|
+      # Removes the target from the dom. The target can either be a dom id string or an object that responds to to_key (ruby/turbo docs)
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.remove("project_#{@project.id}"),
+          turbo_stream.update('flash_messages', partial: 'partials/notification',
+                                                locals: { flash: { notice: 'Project has been deleted successfully!' } })
+        ]
+      end
       format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
       format.json { head :no_content }
     end
