@@ -62,6 +62,6 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.fetch(:project, {})
+    params.require(:project).permit(:name, :description, :start_date, :end_date, :status)
   end
 end
