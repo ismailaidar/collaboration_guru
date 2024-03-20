@@ -47,10 +47,12 @@
       </span>
     </div>
     <div data-controller="search-user">
-      <%= form.text_field :email, placeholder: "Type to search...", data: { action: "input->search-user#query" }, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" %>
-      <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" multiple>
-        <option value="1">user 1</option>
-        <option value="2">user 2</option>
+      <%= form.text_field :email, 
+          placeholder: "Type to search...", 
+          data: { action: "input->search-user#query", search_user_target: 'emailInput' }, 
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" %>
+      <select data-search-user-target="userSelect" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" multiple>
+        
       </select>
     </div>
   </div>
