@@ -14,7 +14,7 @@ document.addEventListener("turbo:load", function () {
   }
 })
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('turbo:load', function () {
   // Find the button and the menu element
   const toggleButton = document.querySelector('button[aria-controls="mobile-menu"]');
   const menu = document.getElementById('mobile-menu');
