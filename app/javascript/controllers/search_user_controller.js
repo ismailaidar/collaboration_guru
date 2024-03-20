@@ -2,6 +2,10 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["userSelect", "emailInput"]
+  
+  connect() {
+    this.query = this.debounce(this.query, 900); 
+  }
 
   query() {
     const select = this.userSelectTarget;
@@ -18,10 +22,11 @@ export default class extends Controller {
     })
     .then(response => response.json())
     .then(response => {
-      const option = document.createElement('option');
       response.forEach(element => {
-        option.text = element.email
-        select.add(option)
+        const option = document.createElement('option'); // Moved inside loop
+        option.text = element.email;
+        option.value = element.email; // Assuming you'd also want to set the value
+        select.add(option);
       });
     })
   }
@@ -30,5 +35,18 @@ export default class extends Controller {
     while (selectElement.options.length > 0) {
       selectElement.remove(0);
     }
+  }
+
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func.apply(this, args);
+      };
+
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   }
 }
