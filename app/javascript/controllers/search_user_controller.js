@@ -41,7 +41,7 @@ export default class extends Controller {
     // Get only the first selection since I am only firing this action on click
     // so I don't need all the selected values but only the first one
     // as soon as it's click I add a tag to the list.
-    const option = this.userSelectTarget.options[0];
+    const option = this.userSelectTarget.selectedOptions[0];
     if (option) {
       const tag = this.createTag(option);
       this.emailTagsTarget.appendChild(tag);
