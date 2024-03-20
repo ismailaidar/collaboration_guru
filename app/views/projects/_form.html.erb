@@ -38,20 +38,18 @@
 
   <div class="field mb-4">
     <%= form.label :users, class: "text-sm font-medium text-gray-700" %>:
-    <div>
-      <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-        user@example.com
-        <button class="ml-2 inline-flex items-center justify-center rounded-full bg-red-300 p-1 text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 text-xs" type="button">
-          X
-        </button>      
-      </span>
-    </div>
     <div data-controller="search-user">
+      <div data-search-user-target="emailTags">
+
+      </div>  
       <%= form.text_field :email, 
           placeholder: "Type to search...", 
           data: { action: "input->search-user#query", search_user_target: 'emailInput' }, 
           class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" %>
-      <select data-search-user-target="userSelect" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" multiple>
+      <select data-search-user-target="userSelect" 
+              data-action="search-user#addEmailTag"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50" 
+              multiple>
         
       </select>
     </div>
