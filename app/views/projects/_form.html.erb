@@ -52,6 +52,9 @@
               multiple>
         
       </select>
+      
+      <%# hidden field to store the selected emails %>
+      <%= form.hidden_field :user_ids, data: { search_user_target: "userIds" } %>
     </div>
   </div>
 

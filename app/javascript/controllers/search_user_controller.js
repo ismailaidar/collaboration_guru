@@ -1,7 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["userSelect", "emailInput", "emailTags"]
+  // UserSelect: the select tag that lists all the emails the user searches for
+  // emailInput: the textbox that the user types the emails to search for
+  // emailTags: the list of emails listed above the select that shows the selected emails for the user
+  // userIds: the list of Ids of the selected email
+  static targets = ["userSelect", "emailInput", "emailTags", "userIds"]
   
   // list of existing tags. to prevent duplicates
   existingTags = [];
@@ -66,7 +70,8 @@ export default class extends Controller {
         </button>
       </span>
     `;
-    this.existingTags.push(option.value)
+    this.existingTags.push(option.value);
+    this.userIdsTarget.value = this.existingTags;
     return wrapper.firstElementChild;
   }
 
