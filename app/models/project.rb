@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   has_many :project_assignments, dependent: :delete_all
   has_many :users, through: :project_assignments
   has_many :events
+  belongs_to :creator, class_name: 'User', foreign_key: 'user_id'
 
   accepts_nested_attributes_for :project_assignments, allow_destroy: true
 

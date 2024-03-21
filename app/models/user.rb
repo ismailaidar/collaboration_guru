@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :project_assignments
   has_many :projects, through: :project_assignments
   has_many :events
+  # projects that the user has created
+  has_many :created_projects, class_name: 'Project', foreign_key: 'user_id'
 
   enum role: {
     admin: 'admin',
