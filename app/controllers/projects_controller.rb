@@ -19,19 +19,11 @@ class ProjectsController < ApplicationController
 
   # POST /projects or /projects.json
   def create
-    @project = Project.new(project_params)
-    @project.creator = current_user
+    service_result = Project::CreateProjectService.new(project_params, current_user).call
+    @project = service_result[:project]
 
     respond_to do |format|
-      if @project.save
-        if project_params[:user_ids].present?
-          user_ids = project_params['user_ids'].split(',')
-          user_ids.each do |user_id|
-            unless ProjectAssignment.exists?(user_id: user_id, project_id: @project.id)
-              @project.project_assignments.create(user_id: user_id.to_i)
-            end
-          end
-        end
+      if service_result[:status] == :success
         format.html { redirect_to project_url(@project), notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
