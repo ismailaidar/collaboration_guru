@@ -23,6 +23,12 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
+        if project_params[:user_ids].present?
+          user_ids = project_params['user_ids'].split(',')
+          user_ids.each do |user_id|
+            @project.project_assignments.create(user_id: user_id.to_i)
+          end
+        end
         format.html { redirect_to project_url(@project), notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
@@ -70,6 +76,6 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description, :start_date, :end_date, :status, user_ids: [])
+    params.require(:project).permit(:name, :description, :start_date, :end_date, :status, :user_ids)
   end
 end

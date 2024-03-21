@@ -1,8 +1,9 @@
 class Project < ApplicationRecord
   # Associations
-  has_many :project_assignments
+  has_many :project_assignments, dependent: :delete_all
   has_many :users, through: :project_assignments
   has_many :events
+
   accepts_nested_attributes_for :project_assignments, allow_destroy: true
 
   # Valid statuses for projects
