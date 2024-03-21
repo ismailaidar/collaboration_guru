@@ -3,6 +3,9 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["userSelect", "emailInput", "emailTags"]
   
+  // list of existing tags. to prevent duplicates
+  existingTags = [];
+  
   connect() {
     this.query = this.debounce(this.query, 900); 
   }
@@ -10,7 +13,7 @@ export default class extends Controller {
   query() {
     const select = this.userSelectTarget;
     
-    // clear the select first
+    // clear the select first so we won't have old values
     this.reset(select)
 
     // add more options based on the search
@@ -44,11 +47,15 @@ export default class extends Controller {
     const option = this.userSelectTarget.selectedOptions[0];
     if (option) {
       const tag = this.createTag(option);
-      this.emailTagsTarget.appendChild(tag);
+      if (tag) {
+        this.emailTagsTarget.appendChild(tag);
+      }
     }
   }
 
-  createTag(option) {
+  createTag = (option) => {
+    if (this.existingTags.includes(option.value)) return;
+
     const wrapper = document.createElement('div');
     wrapper.innerHTML = `
       <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10" id="${option.value}">
@@ -59,6 +66,7 @@ export default class extends Controller {
         </button>
       </span>
     `;
+    this.existingTags.push(option.value)
     return wrapper.firstElementChild;
   }
 
