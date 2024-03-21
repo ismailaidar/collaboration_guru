@@ -26,7 +26,9 @@ class ProjectsController < ApplicationController
         if project_params[:user_ids].present?
           user_ids = project_params['user_ids'].split(',')
           user_ids.each do |user_id|
-            @project.project_assignments.create(user_id: user_id.to_i)
+            unless ProjectAssignment.exists?(user_id: user_id, project_id: @project.id)
+              @project.project_assignments.create(user_id: user_id.to_i)
+            end
           end
         end
         format.html { redirect_to project_url(@project), notice: 'Project was successfully created.' }

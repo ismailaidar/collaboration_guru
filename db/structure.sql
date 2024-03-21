@@ -399,6 +399,13 @@ CREATE INDEX index_project_assignments_on_user_id ON public.project_assignments 
 
 
 --
+-- Name: index_project_assignments_on_user_id_and_project_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_project_assignments_on_user_id_and_project_id ON public.project_assignments USING btree (user_id, project_id);
+
+
+--
 -- Name: index_projects_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -496,6 +503,7 @@ ALTER TABLE ONLY public.project_assignments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240321141109'),
 ('20240315135653'),
 ('20240315132053'),
 ('20240315131909'),
